@@ -35,6 +35,7 @@ my-app/
 - **React** (UI Framework)
 - **Vite** (Build tool for fast development)
 - **Node.js & npm** (Dependency management)
+- **Tailwind CSS** (Utility-first CSS framework)
 
 ## 📜 License
 This project is open-source and available under the MIT License.
