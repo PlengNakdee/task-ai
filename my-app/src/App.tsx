@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import TaskCard from "./TaskCard";
 
@@ -8,22 +7,26 @@ interface Task {
   description: string;
   status: 'pending' | 'in progress' | 'done';
   priority: 'high' | 'medium' | 'low';
+  assignedTo?: string;
 }
 
 function App() {
   const pendingTasks: Task[] = [
-    { id: 1, title: "Create wireframes", description: "Design UI wireframes for new features", status: "pending", priority: "high"},
-    { id: 2, title: "Research competitors", description: "Analyze similar products in the market", status: "pending", priority: "medium" }
+    { id: 1, title: "Create wireframes", description: "Design UI wireframes for new features", status: "pending", priority: "low", assignedTo: "Sarah Johnson" },
+    { id: 2, title: "Research competitors", description: "Analyze similar products in the market", status: "pending", priority: "medium", assignedTo: "Alex Chen" },
+    { id: 7, title: "Write tests", description: "Implement unit tests for new components", status: "pending", priority: "high", assignedTo: "Jordan Taylor" }
   ];
   
   const inProgressTasks: Task[] = [
-    { id: 3, title: "Implement login", description: "Develop authentication system", status: "in progress", priority: "high" },
-    { id: 4, title: "Set up database", description: "Configure MongoDB for task storage", status: "in progress", priority: "medium" }
+    { id: 3, title: "Implement login", description: "Develop authentication system", status: "in progress", priority: "high", assignedTo: "Miguel Rodriguez" },
+    { id: 4, title: "Set up database", description: "Configure MongoDB for task storage", status: "in progress", priority: "medium", assignedTo: "Priya Patel" },
+    { id: 8, title: "Code review", description: "Review pull requests and provide feedback", status: "in progress", priority: "low", assignedTo: "Jordan Taylor" }
   ];
   
   const doneTasks: Task[] = [
-    { id: 5, title: "Project setup", description: "Initialize project and install dependencies", status: "done", priority: "low" },
-    { id: 6, title: "Create repo", description: "Set up git repository and initial commit", status: "done", priority: "low" }
+    { id: 5, title: "Project setup", description: "Initialize project and install dependencies", status: "done", priority: "low", assignedTo: "Jordan Taylor" },
+    { id: 6, title: "Create repo", description: "Set up git repository and initial commit", status: "done", priority: "high", assignedTo: "Sarah Johnson" },
+    { id: 9, title: "Deploy app", description: "Deploy application to production server", status: "done", priority: "medium", assignedTo: "Priya Patel" }
   ];
 
   return (
@@ -40,6 +43,7 @@ function App() {
               description={task.description}
               status={task.status}
               priority={task.priority}
+              assignedTo={task.assignedTo}
             />
           ))}
         </div>
@@ -53,6 +57,7 @@ function App() {
               description={task.description}
               status={task.status}
               priority={task.priority}
+              assignedTo={task.assignedTo}
             />
           ))}
         </div>
@@ -66,6 +71,7 @@ function App() {
               description={task.description}
               status={task.status}
               priority={task.priority}
+              assignedTo={task.assignedTo}
             />
           ))}
         </div>
