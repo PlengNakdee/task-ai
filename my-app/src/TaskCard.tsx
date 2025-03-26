@@ -1,23 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { Task, teamMembers } from "./tasks";
 
-interface TaskCardProps {
-  title: string;
-  description: string;
-  status: "pending" | "in progress" | "done";
-  priority: "high" | "medium" | "low";
-  assignedTo?: string;
-}
-
-const teamMembers = [
-  "Sarah Johnson",
-  "Alex Chen",
-  "Miguel Rodriguez",
-  "Priya Patel",
-  "Jordan Taylor",
-];
-
-const TaskCard: React.FC<TaskCardProps> = ({
+const TaskCard: React.FC<Task> = ({
   title,
   description,
   status: initialStatus,
@@ -57,12 +42,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
   const [showAssignedDropdown, setShowAssignedDropdown] = useState(false);
   const [assignedTo, setAssignedTo] = useState(initialAssignedTo);
 
-  const statusOptions: TaskCardProps["status"][] = [
+  const statusOptions: Task["status"][] = [
     "pending",
     "in progress",
     "done",
   ];
-  const priorityOptions: TaskCardProps["priority"][] = [
+  const priorityOptions: Task["priority"][] = [
     "high",
     "medium",
     "low",
