@@ -11,8 +11,10 @@ This is mini Task Manager App where tasks are created and managed by the user an
    ```sh
    npm install
    ```
-3. Build Tailwind CSS:
+3. Install and build Tailwind CSS:
    ```sh
+   npm install tailwindcss@3.3.5 postcss autoprefixer  
+   npx tailwindcss init -p 
    npx tailwindcss -i ./src/index.css -o ./dist/output.css
    ```
 
