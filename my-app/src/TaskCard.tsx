@@ -52,32 +52,31 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [status, setStatus] = useState(initialStatus);
-  // const [showAssignedDropdown, setShowAssignedDropdown] = useState(false);
-  // const [assignedTo, setAssignedTo] = useState(initialAssignedTo);
+  const [showAssignedDropdown, setShowAssignedDropdown] = useState(false);
+  const [assignedTo, setAssignedTo] = useState(initialAssignedTo);
 
-  const statusOptions: TaskCardProps['status'][] = ['pending', 'in progress', 'done'];
+  const statusOptions: TaskCardProps["status"][] = [
+    "pending",
+    "in progress",
+    "done",
+  ];
 
   return (
     <div className="p-4 rounded-lg shadow-md mb-3 border bg-neutral-200">
       <h3 className="font-bold text-lg text-gray-700 mb-1">{title}</h3>
       <p className="text-gray-700 mb-2">{description}</p>
       <div className="flex justify-between items-center">
-        {/* <span
-          className={`text-sm font-medium px-2 py-1 rounded-lg text-white ${setStatusColor()}`}
-        >
-          {status}
-        </span> */}
-                <span 
+        <span
           className={`relative text-sm font-medium px-2 py-1 rounded-lg text-white ${setStatusColor()} cursor-pointer`}
           onClick={() => setShowStatusDropdown(!showStatusDropdown)}
         >
           {status}
-          
+
           {showStatusDropdown && (
             <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
               <div className="py-1">
                 {statusOptions
-                  .filter(option => option !== status)
+                  .filter((option) => option !== status)
                   .map((option, index) => (
                     <div
                       key={index}
@@ -100,12 +99,34 @@ const TaskCard: React.FC<TaskCardProps> = ({
         >
           {priority}
         </span>
-        {/* <span
-          className="text-sm font-medium px-2 py-1 rounded-lg text-white bg-blue-500 cursor-pointer"
-          onClick={() => setShowDropdown(!showDropdown)}
+        <span
+          className="relative text-sm font-medium px-2 py-1 rounded-lg text-white bg-blue-500 cursor-pointer"
+          onClick={() => setShowAssignedDropdown(!showAssignedDropdown)}
         >
           {assignedTo || "Not Assigned"}
-        </span> */}
+
+          {showAssignedDropdown && (
+            <div className="absolute top-full right-0 mt-1 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+              <div className="py-1">
+                {teamMembers
+                  .filter((member) => member !== assignedTo)
+                  .map((member, index) => (
+                    <div
+                      key={index}
+                      className="block text-sm font-medium px-2 py-1 text-gray-700 cursor-pointer hover:bg-gray-100"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setAssignedTo(member);
+                        setShowAssignedDropdown(false);
+                      }}
+                    >
+                      {member}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+        </span>
       </div>
     </div>
   );
