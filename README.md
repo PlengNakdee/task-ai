@@ -17,12 +17,14 @@ This is mini Task Manager App where tasks are created and managed by the user an
    npx tailwindcss init -p 
    npx tailwindcss -i ./src/index.css -o ./dist/output.css
    ```
+### 🌐 Add API
+Check the example in `.env.example` for adding your Hugging Face API key. Copy it to your `.env.local` file and replace `YOUR_API_KEY_HERE` with your actual API key.
 
 ### 🔥 Running the Development Server
 
-To start the development server, run:
+To start the development server, concurrently run `npm run dev` and `npm run backend`:
 ```sh
-npm run dev
+npm run dev:full
 ```
 
 This will start the server, and you can access your app at `http://localhost:5173/` by default.
@@ -32,3 +34,4 @@ This will start the server, and you can access your app at `http://localhost:517
 - **Vite** (Build tool for fast development)
 - **Node.js & npm** (Dependency management)
 - **Tailwind CSS** (Utility-first CSS framework)
+- **Hugging Face** (Platform for ML models)

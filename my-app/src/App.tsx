@@ -52,10 +52,80 @@ function App() {
     localStorage.setItem("pendingTasks", JSON.stringify(pendingTasks));
   }, [pendingTasks]);
 
-  const saveTask = () => {
-    console.log(title, description);
-    // if (!title.trim() || !description.trim()) return;
+  // const handleImprove = async () => {
+  //   const API_KEY = import.meta.env.VITE_HUGGINGFACE_API_KEY;
+  //   try {
+  //     const response = await fetch(
+  //       "https://api-inference.huggingface.co/models/OpenAssistant/oasst-sft-1-pythia-12b",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${API_KEY}`,
+  //         },
+  //         body: JSON.stringify({
+  //           // inputs: `Rewrite this "${title}" and "${description}" to be clear and actionable.`,
+          
+  //           inputs: `Improved Task Format:\nTitle: [Concise, Specific Title]\nDescription: [Detailed, Clear Description]\n\nOriginal Task: Title: ${title}, Description: ${description}. Please fix it.\n\nImproved Task:`,
+          
+  //           parameters: {
+  //             max_length: 200,
+  //           },
+  //         }),
+  //       }
+  //     );
 
+  //     const data = await response.json();
+  //     console.log("Response from Hugging Face API:", data);
+
+  //     if (response.ok) {
+  //       const generatedText = data[0]?.generated_text || "";
+  //       console.log("Generated text:", generatedText);
+  //       // const titleMatch = generatedText.match(
+  //       //   /Title:\s*(.+?)(?=Description:)/
+  //       // );
+  //       // const descriptionMatch = generatedText.match(/Description:\s*(.+)$/);
+
+  //       // setOptimizedTitle(titleMatch ? titleMatch[1].trim() : title);
+  //       // setOptimizedDescription(descriptionMatch ? descriptionMatch[1].trim() : description);
+  //     } else {
+  //       console.error("Error from Hugging Face API:", data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error optimizing task:", error);
+  //   }
+  // };
+  const handleImprove = async () => {
+    try {
+      const response = await fetch('/api/improve-task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          description
+        })
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to improve task');
+      }
+  
+      const data = await response.json();
+      console.log('Response from API:', data);
+      
+      // setOptimizedTitle(data.optimizedTitle);
+      // setOptimizedDescription(data.optimizedDescription);
+    } catch (error) {
+      console.error('Error optimizing task:', error);
+      // Fallback to original values
+      // setOptimizedTitle(title);
+      // setOptimizedDescription(description);
+    }
+  };
+
+  const saveTask = () => {
     const newTask: Task = {
       id: uuidv4(),
       title,
@@ -66,8 +136,8 @@ function App() {
     };
 
     setPendingTasks((prevTasks) => [...prevTasks, newTask]);
-    setIsModalOpen(false); // Close modal after saving
-    setTitle(""); // Reset input fields
+    setIsModalOpen(false);
+    setTitle("");
     setDescription("");
   };
 
@@ -99,7 +169,10 @@ function App() {
               className="border p-2 rounded w-full mb-4"
             />
             <div className="flex justify-between mb-4">
-              <button className="bg-red-300 px-4 py-2 rounded-lg">
+              <button
+                className="bg-red-300 px-4 py-2 rounded-lg"
+                onClick={handleImprove}
+              >
                 Improve with AI
               </button>
               <div className="flex justify-end space-x-2">
