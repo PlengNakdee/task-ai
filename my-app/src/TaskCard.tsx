@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useState } from "react";
 
 interface TaskCardProps {
@@ -21,7 +21,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   title,
   description,
   status: initialStatus,
-  priority,
+  priority: initialPriority,
   assignedTo: initialAssignedTo,
 }) => {
   const setStatusColor = () => {
@@ -52,6 +52,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [status, setStatus] = useState(initialStatus);
+  const [showPriorityDropdown, setShowPriorityDropdown] = useState(false);
+  const [priority, setPriority] = useState(initialPriority);
   const [showAssignedDropdown, setShowAssignedDropdown] = useState(false);
   const [assignedTo, setAssignedTo] = useState(initialAssignedTo);
 
@@ -59,6 +61,11 @@ const TaskCard: React.FC<TaskCardProps> = ({
     "pending",
     "in progress",
     "done",
+  ];
+  const priorityOptions: TaskCardProps["priority"][] = [
+    "high",
+    "medium",
+    "low",
   ];
 
   return (
@@ -95,10 +102,34 @@ const TaskCard: React.FC<TaskCardProps> = ({
           )}
         </span>
         <span
-          className={`text-sm font-medium px-2 py-1 rounded-lg text-white ${setPriorityColor()}`}
+          className={`relative text-sm font-medium px-2 py-1 rounded-lg text-white ${setPriorityColor()} cursor-pointer`}
+          onClick={() => setShowPriorityDropdown(!showPriorityDropdown)}
         >
           {priority}
+
+          {showPriorityDropdown && (
+            <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+              <div className="py-1">
+                {priorityOptions
+                  .filter((option) => option !== priority)
+                  .map((option, index) => (
+                    <div
+                      key={index}
+                      className="block text-sm font-medium px-2 py-1 text-gray-700 cursor-pointer hover:bg-gray-100"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPriority(option);
+                        setShowPriorityDropdown(false);
+                      }}
+                    >
+                      {option}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
         </span>
+
         <span
           className="relative text-sm font-medium px-2 py-1 rounded-lg text-white bg-blue-500 cursor-pointer"
           onClick={() => setShowAssignedDropdown(!showAssignedDropdown)}
